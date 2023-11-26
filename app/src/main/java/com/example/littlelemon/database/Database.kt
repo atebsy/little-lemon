@@ -1,4 +1,4 @@
-package com.example.littlelemon
+package com.example.littlelemon.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

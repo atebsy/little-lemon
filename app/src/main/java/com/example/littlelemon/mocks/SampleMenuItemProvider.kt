@@ -1,7 +1,7 @@
 package com.example.littlelemon.mocks
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.example.littlelemon.MenuItem
+import com.example.littlelemon.database.MenuItem
 
 class SampleMenuItemProvider() : PreviewParameterProvider<List<MenuItem>> {
     override val values: Sequence<List<MenuItem>> =

@@ -1,19 +1,23 @@
-package com.example.littlelemon
+package com.example.littlelemon.ui.screens.onboarding
 
+import android.content.Context
 import android.content.SharedPreferences
-import androidx.activity.ComponentActivity
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,23 +32,41 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.edit
 import androidx.navigation.NavHostController
+import com.example.littlelemon.Home
+import com.example.littlelemon.R
 import com.example.littlelemon.ui.theme.LittleLemonColor
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(
+fun OnboardingScreen(
     navHostController: NavHostController?,
-    sharedPreferences: SharedPreferences?
-){
+    sharedPreferences: SharedPreferences?,
+    context: Context?
+) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
             painter = painterResource(id = R.drawable.top_logo_image),
             contentDescription = "Logo with text",
             modifier = Modifier
-                .padding(top = 5.dp, bottom = 70.dp)
+                .padding(top = 5.dp)
                 .width(150.dp)
         )
-
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp, bottom = 10.dp)
+                .height(50.dp)
+                .background(color = LittleLemonColor.green),
+        ) {
+            Text(
+                text = "Let's get to know you",
+                color = LittleLemonColor.cloud,
+                fontSize = 24.sp
+            )
+        }
         Box(
             modifier = Modifier
                 .padding(top = 25.dp, bottom = 25.dp)
@@ -63,51 +85,75 @@ fun ProfileScreen(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            val firstName by remember {
-                mutableStateOf(sharedPreferences?.getString("first_name","").toString())
+            var firstName by remember {
+                mutableStateOf("")
             }
 
-            val lastName by remember {
-                mutableStateOf(sharedPreferences?.getString("last_name","").toString())
+            var lastName by remember {
+                mutableStateOf("")
             }
 
-            val email by remember {
-                mutableStateOf(sharedPreferences?.getString("email","").toString())
+            var email by remember {
+                mutableStateOf("")
             }
-
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp)
             ) {
-                ProfileTextField(
+                OnboardingTextField(
                     value = firstName,
                     textFieldLabel = "First Name"
-                )
+                ) {
+                    firstName = it
+                }
 
-                ProfileTextField(
+                OnboardingTextField(
                     value = lastName,
                     textFieldLabel = "Last Name"
-                )
+                ) {
+                    lastName = it
+                }
 
-                ProfileTextField(
+                OnboardingTextField(
                     value = email,
                     textFieldLabel = "Email"
-                )
+                ) {
+                    email = it
+                }
 
                 Button(
                     modifier = Modifier
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(7.dp),
                     onClick = {
-                        sharedPreferences?.edit()?.clear()?.commit()
-                        navHostController?.navigate(Onboarding.route)
+                        if (firstName.isNotBlank()
+                            && lastName.isNotBlank()
+                            && email.isNotBlank()
+                        ) {
+                            sharedPreferences?.edit(commit = true) {
+                                putString("first_name", firstName)
+                            }
+
+                            sharedPreferences?.edit(commit = true) {
+                                putString("last_name", lastName)
+                            }
+
+                            sharedPreferences?.edit(commit = true) {
+                                putString("email", email)
+                            }
+
+                            navHostController?.navigate(Home.route)
+                        } else {
+                            Toast.makeText(context, "All field are required!!", Toast.LENGTH_LONG)
+                                .show()
+                        }
                     },
                     colors = ButtonDefaults.buttonColors(LittleLemonColor.yellow),
                     border = BorderStroke(2.dp, LittleLemonColor.pink)
                 ) {
                     Text(
-                        text = "Logout",
+                        text = "Register",
                         color = LittleLemonColor.charcoal
                     )
                 }
@@ -116,11 +162,11 @@ fun ProfileScreen(
     }
 }
 
-
 @Composable
-fun ProfileTextField(
+fun OnboardingTextField(
     value: String,
-    textFieldLabel: String
+    textFieldLabel: String,
+    onTextFieldChange: (String) -> Unit
 ) {
     Text(
         text = textFieldLabel,
@@ -128,8 +174,7 @@ fun ProfileTextField(
     )
     BasicTextField(
         value = value,
-        onValueChange = {},
-        readOnly = true,
+        onValueChange = onTextFieldChange,
         decorationBox = { innerTextField ->
             Box(
                 modifier = Modifier
@@ -156,9 +201,8 @@ fun ProfileTextField(
     )
 }
 
-
 @Preview(showBackground = true)
 @Composable
-fun ProfilePreview() {
-    ProfileScreen(null, null)
+fun OnboardingPreview() {
+    OnboardingScreen(null, null, null)
 }

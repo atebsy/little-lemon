@@ -1,5 +1,6 @@
-package com.example.littlelemon
+package com.example.littlelemon.network
 
+import com.example.littlelemon.database.MenuItem
 import kotlinx.serialization.Serializable
 @Serializable
 data class MenuNetworkdata(val menu: List<MenuItemNetwork>)

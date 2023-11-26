@@ -6,6 +6,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.littlelemon.database.MenuItem
+import com.example.littlelemon.ui.screens.home.HomeScreen
+import com.example.littlelemon.ui.screens.onboarding.OnboardingScreen
+import com.example.littlelemon.ui.screens.profile.ProfileScreen
 
 
 @Composable
