@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">LittleLemon</string>
     <string name="restaurant_desc">We are a family owned Mediterranean restaurant, focused on traditional recipes served with twist</string>
+    <string name="email_err_msg">Email cannot be empty</string>
+    <string name="first_name_err_msg">First name cannot be empty</string>
+    <string name="last_name_err_msg">Last name cannot be empty</string>
 </resources>
