@@ -109,10 +109,40 @@ class OnboardingViewModel : ViewModel() {
 
             navHostController?.navigate(Home.route)
         } else {
-            OnboardingVmHelper.checkInvalidField(
-                onboardingUiState = _uiState,
-                firstName, lastName, email
-            )
+            checkInvalidField(firstName, lastName, email)
+        }
+    }
+
+    fun checkInvalidField(
+        firstName: String,
+        lastName: String,
+        email: String
+    ) {
+        if (firstName.isEmpty()) {
+
+            _uiState.update { currentState ->
+                currentState.copy(
+                    firstNamError = R.string.first_name_err_msg
+                )
+            }
+        }
+
+        if (lastName.isEmpty()) {
+
+            _uiState.update { currentState ->
+                currentState.copy(
+                    lastNameError = R.string.last_name_err_msg
+                )
+            }
+        }
+
+        if (email.isEmpty()) {
+
+            _uiState.update { currentState ->
+                currentState.copy(
+                    emailError = R.string.email_err_msg
+                )
+            }
         }
     }
 
