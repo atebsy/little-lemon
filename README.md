@@ -10,4 +10,4 @@ A simple restaurant app fully built with jetpack compose that displays a menu li
  
  <b>Architecture:</b> <a href="https://developer.android.com/topic/architecture">MVVM, Repository pattern With SSOT principle</a>
  
- <b>Jet pack and other Libraries:</b> <a href="https://developer.android.com/jetpack/compose"> Jet pack compose </a> <a href="https://developer.android.com/jetpack/androidx/releases/room">Room</a>, <a href="https://ktor.io/">Ktor</a>, <a href="https://coil-kt.github.io/coil/compose/">Coil</a> <a href="https://m3.material.io/develop/android/jetpack-compose"> Material</a>,lifecycle, test, junit
+ <b>Jet pack and other Libraries:</b> <a href="https://developer.android.com/jetpack/compose"> Jet pack compose </a>,  <a href="https://developer.android.com/jetpack/androidx/releases/room">Room</a>, <a href="https://ktor.io/">Ktor</a>, <a href="https://coil-kt.github.io/coil/compose/">Coil</a> <a href="https://m3.material.io/develop/android/jetpack-compose"> Material</a>,lifecycle, test, junit
